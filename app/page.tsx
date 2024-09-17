@@ -7,7 +7,6 @@ export default function Home() {
       <h1>I&apos;m starting the NextJS 13</h1>
       <SignedIn>
         <UserButton />
-        
       </SignedIn>
     </div>
   );
