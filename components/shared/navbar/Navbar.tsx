@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import Theme from './Theme'
+import Mobilenav from './Mobilenav'
 
 const Navbar = () => {
   return (
@@ -31,6 +32,7 @@ const Navbar = () => {
                     }}
                 />
             </SignedIn>
+            <Mobilenav />
         </div>
     </div>
   )
