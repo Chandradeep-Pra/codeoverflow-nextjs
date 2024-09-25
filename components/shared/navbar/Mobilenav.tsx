@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Sheet,
@@ -9,9 +11,40 @@ import Image from "next/image";
 import Link from "next/link";
 import { SignedOut } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
+import { sidebarLinks } from "@/constants";
 
-const NavContent = () => {
-  return <h1 className="text-3xl">Nav Content</h1>;
+const TempNavContent = () => {
+  const pathname = usePathname();
+  return (
+    <section className="flex flex-col gap-2 pt-16">
+         {sidebarLinks.map((item) => {
+        const isActive =
+          (pathname.includes(item.route) && item.route.length > 1) ||
+          pathname === item.route;
+        return (
+          <SheetClose asChild key={item.route}>
+            <Link
+              key={item.label}
+              href={item.route}
+              className={`${isActive ? "primary-gradient rounded-lg text-light-900" : "text-dark300_light900"} flex items-center justify-start gap-4 bg-transparent p-4`}
+            >
+              <item.icon
+                width={20}
+                height={20}
+                aria-label={item.label}
+                className={`${isActive ? "" : "invert-colors"}`}
+              />
+              <p className={`${isActive ? "base-bold" : "base-medium"}`}>
+                {item.label}
+              </p>
+            </Link>
+          </SheetClose>
+        );
+      })}
+    </section>
+   
+  );
 };
 
 const Mobilenav = () => {
@@ -30,7 +63,8 @@ const Mobilenav = () => {
         side="left"
         className="background-light900_dark200 border-none"
       >
-        <Link href="/" className="flex items-center gap-1">
+        
+         <Link href="/" className="flex items-center gap-1">
           <Image
             src="/assets/images/site-logo.svg"
             width={23}
@@ -38,15 +72,16 @@ const Mobilenav = () => {
             alt="codeflow"
           />
           <p className="h2-bold text-dark100_light900 font-spaceGrotesk">
-            Code <span className="text-primary-500"> Flow</span>
+            Code <span className="text-primary-500">Cycle</span>
           </p>
         </Link>
-        <div>
+        {/* <div> */}
           <SheetClose asChild>
-            <NavContent />
+            <TempNavContent />
           </SheetClose>
           <SignedOut>
-            <div className="flex flex-col gap-3">
+            {/* <h1 className="text-4xl">Hi</h1> */}
+             <div className="flex flex-col gap-3 pt-12">
               <SheetClose asChild>
                 <Link href="/sign-in">
                   <Button className="small-medium btn-secondary min-h[41px] w-full rounded-lg px-4 py-3 shadow-none">
@@ -67,7 +102,7 @@ const Mobilenav = () => {
               </SheetClose>
             </div>
           </SignedOut>
-        </div>
+        {/* </div>   */}
       </SheetContent>
     </Sheet>
   );
