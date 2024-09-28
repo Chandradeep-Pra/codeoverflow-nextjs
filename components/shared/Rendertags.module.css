@@ -1,0 +1,13 @@
+
+.badge {
+    transition: background-color 0.3s ease;
+  }
+  
+  .badgeHover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .accentHover {
+    background-color: rgba(0, 123, 255, 0.6); 
+  }
+  
