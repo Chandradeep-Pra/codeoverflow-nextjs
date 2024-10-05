@@ -9,7 +9,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import Image from "next/image";
+// import Image from "next/image";
 import { themes } from "@/constants";
 import SunIcon from "@/public/assets/icons/sun.svg"; // Import the sun icon
 import MoonIcon from "@/public/assets/icons/moon.svg";

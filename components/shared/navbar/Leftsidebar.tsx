@@ -1,5 +1,5 @@
 import React from 'react'
-import NavContent from './Navcontent'
+import NavContent from './NavContent'
 
 const Leftsidebar = () => {
   return (

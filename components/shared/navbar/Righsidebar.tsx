@@ -30,57 +30,18 @@ const topQuestions = [
 ];
 
 const popularTags = [
-  {
-    _id: 1,
-    tag: "nextjs",
-    count: 4,
-  },
-  {
-    _id: 2,
-    tag: "reactjs",
-    count: 2,
-  },
-  {
-    _id: 3,
-    tag: "react",
-    count: 2,
-  },
-  {
-    _id: 4,
-    tag: "postgres",
-    count: 2,
-  },
-  {
-    _id: 5,
-    tag: "performance",
-    count: 1,
-  },
-  {
-    _id: 6,
-    tag: "graphql",
-    count: 3,
-  },
-  {
-    _id: 7,
-    tag: "typescript",
-    count: 2,
-  },
-  {
-    _id: 8,
-    tag: "css",
-    count: 1,
-  },
-  {
-    _id: 9,
-    tag: "docker",
-    count: 1,
-  },
-  {
-    _id: 10,
-    tag: "api",
-    count: 3,
-  },
+  { _id: '1', tag: "nextjs", count: 4, accentCol: '#0070f3' },
+  { _id: '2', tag: "reactjs", count: 2, accentCol: '#61dafb' },
+  { _id: '3', tag: "react", count: 2, accentCol: '#61dafb' },
+  { _id: '4', tag: "postgres", count: 2, accentCol: '#336791' },
+  { _id: '5', tag: "performance", count: 1, accentCol: '#28a745' },
+  { _id: '6', tag: "graphql", count: 3, accentCol: '#e535ab' },
+  { _id: '7', tag: "typescript", count: 2, accentCol: '#007acc' },
+  { _id: '8', tag: "css", count: 1, accentCol: '#2965f1' },
+  { _id: '9', tag: "docker", count: 1, accentCol: '#2496ed' },
+  { _id: '10', tag: "api", count: 3, accentCol: '#f8f9fa' },
 ];
+
 
 
 const Righsidebar = () => {
@@ -116,6 +77,7 @@ const Righsidebar = () => {
               key={tag._id}
               _id={tag._id}
               name={tag.tag}
+              accentCol={tag.accentCol}
               totalQuestions={tag.count}
               showCount
             />
