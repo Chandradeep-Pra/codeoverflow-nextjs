@@ -16,28 +16,32 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { QuestionSchema } from "@/lib/validations";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
 import DeleteTagIcon from "@/public/assets/icons/close.svg";
+import { createQuestion } from "@/lib/actions/question.action";
+
+const type: any = "create";
 
 const Question = () => {
   const editorRef = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof QuestionSchema>>({
     resolver: zodResolver(QuestionSchema),
     defaultValues: {
       title: "",
+      explanation: "",
       tags: [],
     },
   });
 
-  const handleTagRemove = (tag:string,field:any) => {
-    const newTags = field.value.filter((t:string)=> t !== tag);
+  const handleTagRemove = (tag: string, field: any) => {
+    const newTags = field.value.filter((t: string) => t !== tag);
 
-    form.setValue('tags',newTags)
-  }
+    form.setValue("tags", newTags);
+  };
 
   const handleInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
@@ -66,9 +70,19 @@ const Question = () => {
   };
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof QuestionSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: z.infer<typeof QuestionSchema>) {
+    setIsSubmitting(true);
+
+    try {
+      // make an async call to api database to create a quesiton
+      // contain all form data
+      await createQuestion({})
+      // navigate to home page
+    } catch (error) {
+    } finally {
+      setIsSubmitting(false);
+    }
+
     console.log(values);
   }
   return (
@@ -116,6 +130,8 @@ const Question = () => {
                     // @ts-ignore
                     editorRef.current = editor;
                   }}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 350,
@@ -150,7 +166,7 @@ const Question = () => {
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
                 Introduce the problem and expand on what you put in the title.
-                Minimum 20 characters.
+                Minimum 50 characters.
               </FormDescription>
               <FormMessage className="text-red-500" />
             </FormItem>
@@ -174,7 +190,11 @@ const Question = () => {
                   {field.value.length > 0 && (
                     <div className="flex-start mt-2.5 gap-2.5">
                       {field.value.map((tag: any) => (
-                        <Badge className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize" key={tag} onClick={() => handleTagRemove(tag,field)} >
+                        <Badge
+                          className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
+                          key={tag}
+                          onClick={() => handleTagRemove(tag, field)}
+                        >
                           {tag}
                           <DeleteTagIcon
                             className="scale-50 cursor-pointer object-contain invert-0 dark:invert"
@@ -194,8 +214,16 @@ const Question = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="bg-primary-500 text-primary-100 ">
-          Ask a Question
+        <Button
+          type="submit"
+          className="primary-gradient w-fit !text-light-900 "
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <>{type === "edit" ? "Editting..." : "Posting..."}</>
+          ) : (
+            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
+          )}
         </Button>
       </form>
     </Form>
